@@ -1,0 +1,26 @@
+{
+  "name": "bingimageclient",
+  "version": "0.1.0",
+  "description": "Generates images from bing's Image Creation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RayBytes/bing-image-gen.git"
+  },
+  "keywords": [
+    "bing",
+    "ai",
+    "gpt"
+  ],
+  "author": "Game_Time",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RayBytes/bing-image-gen/issues"
+  },
+  "homepage": "https://github.com/RayBytes/bing-image-gen#readme",
+  "dependencies": {
+  }
+}
