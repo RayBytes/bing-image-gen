@@ -8,5 +8,5 @@ Look at demos/index.ts for example usage.
 
 # Credits
 
-@waylaidwanderer - Took inspiration from his repository 
-@acheong08 - Reversed bing's image endpoints
+[@waylaidwanderer] - Took inspiration from his repository 
+[@acheong08] - Reversed bing's image endpoints
