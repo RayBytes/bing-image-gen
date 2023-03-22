@@ -4,7 +4,7 @@ Generates images from microsoft's Image Creation website.
 
 # Usage
 
-Look at demos/index.ts for example usage.
+Look at [`demos/index.ts`](demos/index.ts). for example usage.
 
 # Credits
 
