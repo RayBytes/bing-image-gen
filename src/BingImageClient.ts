@@ -71,7 +71,7 @@ export default class BingImageClient {
                 await setTimeout(100)
             } else {
                 const links = [...resp_text.matchAll(/src="([^"]+)"/g)]
-                return [ links![0][1], links[1][1], links[2][1], links[3][1] ]
+                return [ links[0][1], links[1][1], links[2][1], links[3][1] ]
             }
         }
     }
