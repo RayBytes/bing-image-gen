@@ -1,8 +1,5 @@
 import fs from 'fs';
-
-function sleep(ms : number) {
-    return new Promise(val => setTimeout(val, ms));
-  }
+import { setTimeout } from "node:timers/promises";
 
 export default class BingImageClient {
     options: any;
@@ -71,7 +68,7 @@ export default class BingImageClient {
             const resp_text = await getimages.text()
             
             if (resp_text == '') {
-                await sleep(100)
+                await setTimeout(100)
             } else {
                 const links = [...resp_text.matchAll(/src="([^"]+)"/g)]
                 return [ links![0][1], links[1][1], links[2][1], links[3][1] ]
