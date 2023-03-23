@@ -15,7 +15,7 @@ Use as:
 To authenticate yourself, please firstly:
 1. Go to https://www.bing.com/images/create
 2. Go into inspect element (Right click -> Inspect Element)
-3. Go to the Application tab on the top of th new tabe which has opened up (Expand it if you can't see it).
+3. Go to the Application tab on the top of the new tab which has opened up (Expand it if you can't see it).
 4. Go to the Cookies 
 5. Search up 'KievRPSSecAuth' and input the value like you see it in [`demos/imagedownload.ts`](demos/imagedownload.ts)
 
