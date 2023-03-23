@@ -5,7 +5,9 @@ async function main() {
         // Use KievRPSSecAuth cookie, it works best from what I've seen.
         token: 'KievRPSSecAuth=YOURTOKENGOESHERE',
         // Here is the directory to go through. '.' means local directory. (Don't end the directory url with /)
-        dir: '.'
+        dir: '.',
+        // Make microsoft send you a lovely email
+        notify: false
     });
     const result = await client.getImages('cat');
     await client.downloadImages(result)
