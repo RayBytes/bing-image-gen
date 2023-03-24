@@ -21,6 +21,8 @@ To authenticate yourself, please firstly:
 
 And you are now authenticated!
 
+(If you do not see the 'KievRPSSecAuth' key, relog into the image website)
+
 # Usage
 
 Look at [`demos/imagedownload.ts`](demos/imagedownload.ts) for example usage.
