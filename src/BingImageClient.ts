@@ -41,7 +41,7 @@ export default class BingImageClient {
     let id = new URLSearchParams(response.url).get("id");
     await fetch(`${BASE_ENDPOINT}?q=${prompt}&rt=4&FORM=GENCRE&id=${id}`);
     if (!id) {
-      const response = await fetch(`https://www.bing.com/images/create?q=${prompt}&rt=3&FORM=GENCRE`, {
+      const response = await fetch(`${BASE_ENDPOINT}?q=${prompt}&rt=3&FORM=GENCRE`, {
         headers: {
           ...this.headers,
           redirect: "manual",
