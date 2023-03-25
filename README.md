@@ -5,7 +5,7 @@ Generates images from microsoft's Image Creation website.
 # Installation
 
 Install with:
-`npm install bingimageclient@0.2.0`
+`npm install bingimageclient`
 
 Use as:
 `const { BingImageClient } = require('bingimageclient');`
