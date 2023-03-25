@@ -1,4 +1,4 @@
-import BingImageClient from './src/BingImageClient';
+import BingImageClient, { IOptions } from "./src/BingImageClient";
 
-export { BingImageClient }
-export default BingImageClient
+export { BingImageClient, IOptions };
+export default BingImageClient;
