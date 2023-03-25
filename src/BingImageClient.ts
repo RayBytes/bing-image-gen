@@ -12,67 +12,93 @@ export interface IOptions {
 const BASE_ENDPOINT = "https://www.bing.com/images/create";
 
 export default class BingImageClient {
-  private readonly headers: Headers;
+  private readonly headers: Record<string, string>;
   private readonly options: IOptions;
   public constructor(options: IOptions) {
-    this.headers = new Headers({
-      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-      "accept-language": "en-US,en;q=0.9",
-      "cache-control": "max-age=0",
-      "content-type": "application/x-www-form-urlencoded",
-      "referrer": BASE_ENDPOINT,
-      "origin": new URL(BASE_ENDPOINT).origin,
-      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.63",
-      "cookie": options.token,
-    });
-    this.options = Object.assign({ dir: process.cwd(), notify: false }, options);
+    this.headers = {
+      Accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "Accept-Language": "en-US,en;q=0.9",
+      "Cache-Control": "max-age=0",
+      "Content-Type": "application/x-www-form-urlencoded",
+      Referrer: BASE_ENDPOINT,
+      Origin: new URL(BASE_ENDPOINT).origin,
+      "User-Agent":
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.63",
+      Cookie: options.token,
+    };
+    this.options = Object.assign(
+      { dir: process.cwd(), notify: false },
+      options
+    );
   }
 
-  public async getImages(prompt: string) {
-    const response = await fetch(`${BASE_ENDPOINT}?q=${prompt}&rt=4&FORM=GENCRE`, {
-      headers: {
-        ...this.headers,
-        redirect: "manual",
-      },
-      method: "POST",
-      credentials: "include",
-    });
-
-    let id = new URLSearchParams(response.url).get("id");
-    await fetch(`${BASE_ENDPOINT}?q=${prompt}&rt=4&FORM=GENCRE&id=${id}`);
-    if (!id) {
-      const response = await fetch(`${BASE_ENDPOINT}?q=${prompt}&rt=3&FORM=GENCRE`, {
+  public async getImages(prompt: string): Promise<string[]> {
+    const response = await fetch(
+      `${BASE_ENDPOINT}?q=${prompt}&rt=4&FORM=GENCRE`,
+      {
         headers: {
           ...this.headers,
           redirect: "manual",
         },
         method: "POST",
         credentials: "include",
-      });
+      }
+    );
+
+    let id = new URLSearchParams(response.url).get("id");
+    await fetch(
+      `${BASE_ENDPOINT}/create?q=${prompt}&rt=4&FORM=GENCRE&id=${id}`
+    );
+
+    if (!id) {
+      const response = await fetch(
+        `${BASE_ENDPOINT}?q=${prompt}&rt=3&FORM=GENCRE`,
+        {
+          headers: {
+            ...this.headers,
+            redirect: "manual",
+          },
+          method: "POST",
+          credentials: "include",
+        }
+      );
 
       id = new URLSearchParams(response.url).get("id");
-      await fetch(`${BASE_ENDPOINT}?q=${prompt}&rt=3&FORM=GENCRE&id=${id}&nfy=1`, {
-        headers: this.headers,
-        method: "GET",
-      });
-      if (this.options.notify) {
-        await fetch(`${BASE_ENDPOINT}/async/notify/CreationComplete?rid=${id}&nfy=1`, {
+      await fetch(
+        `${BASE_ENDPOINT}?q=${prompt}&rt=3&FORM=GENCRE&id=${id}&nfy=1`,
+        {
           headers: this.headers,
           method: "GET",
-        });
+        }
+      );
+
+      if (this.options.notify) {
+        await fetch(
+          `${BASE_ENDPOINT}/async/notify/CreationComplete?rid=${id}&nfy=1`,
+          {
+            headers: this.headers,
+            method: "GET",
+          }
+        );
       }
 
       if (!id) {
-        throw new Error("Image ID was returned as null. You may have run out of boosts, or your cookie is invalid.");
+        throw new Error(
+          "Image ID was returned as null. You may have run out of boosts, or your cookie is invalid."
+        );
       }
     }
 
     // Attempts to retrieve image
     while (true) {
-      const getimages = await fetch(`${BASE_ENDPOINT}/async/results/${id}?q=${prompt}`, {
-        headers: this.headers,
-        method: "GET",
-      });
+      const getimages = await fetch(
+        `${BASE_ENDPOINT}/async/results/${id}?q=${prompt}`,
+        {
+          headers: this.headers,
+          method: "GET",
+        }
+      );
 
       const resp_text = await getimages.text();
 
@@ -85,7 +111,7 @@ export default class BingImageClient {
     }
   }
 
-  public async downloadImages(urls: (RequestInfo | URL)[]) {
+  public async downloadImages(urls: (RequestInfo | URL)[]): Promise<void> {
     for (const url of urls) {
       const response = await fetch(url, {
         headers: this.headers,
