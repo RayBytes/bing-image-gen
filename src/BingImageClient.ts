@@ -93,7 +93,7 @@ export default class BingImageClient {
         headers: this.headers,
         method: "GET",
       });
-      const file = createWriteStream(`${this.options.dir}/${url}.jpeg`);
+      const file = createWriteStream(`${this.options.dir}/${urls.indexOf(url)}.jpeg`);
       // @ts-ignore
       // dont know why typescript is complaining about this
       const webStreamToNode = Readable.fromWeb(response.body);
