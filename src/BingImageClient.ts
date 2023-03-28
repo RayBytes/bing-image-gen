@@ -81,8 +81,12 @@ export default class BingImageClient {
       if (resp_text == "") {
         await setTimeout(100);
       } else {
-        const links = [...resp_text.matchAll(/src="([^"]+)"/g)];
-        return [links[0][1], links[1][1], links[2][1], links[3][1]];
+        const links = [...resp_text.matchAll(/src="([^"]+)"/g)]
+        const array = [ ]
+        for (let i = 0; i < links.length; i++) {
+            array.push(links[i][1].replace(/tse[1234]\.mm\.bing\.net/, "th.bing.com").replace(/\?.*/, ""));
+        }
+        return array;
       }
     }
   }
